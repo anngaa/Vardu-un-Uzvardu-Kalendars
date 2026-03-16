@@ -20,7 +20,7 @@ export default function BottomTabBar({ activeTab, onTabChange }: BottomTabBarPro
     ];
 
     return (
-        <View 
+        <View
             className="bg-[#efefef]"
             style={{
                 paddingBottom: Platform.OS === 'android' ? Math.max(insets.bottom, 12) : insets.bottom,
@@ -29,7 +29,7 @@ export default function BottomTabBar({ activeTab, onTabChange }: BottomTabBarPro
             <View
                 className="flex-row items-center justify-around"
                 style={{
-                    paddingTop: 10,
+                    paddingTop: 12,
                     paddingBottom: 4,
                 }}
             >

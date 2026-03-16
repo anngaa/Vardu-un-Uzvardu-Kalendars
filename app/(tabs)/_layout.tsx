@@ -1,7 +1,6 @@
-import React from "react";
 import { Tabs } from "expo-router";
+import React from "react";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { Platform } from "react-native";
 import SolarIcon from "../../components/SolarIcon";
 
 export default function TabLayout() {
@@ -13,8 +12,9 @@ export default function TabLayout() {
         headerShown: false,
         tabBarStyle: {
           backgroundColor: "#efefef",
-          height: 60 + insets.bottom,
-          paddingBottom: insets.bottom,
+          height: 72 + insets.bottom,
+          paddingTop: 10,
+          paddingBottom: insets.bottom + 8,
           borderTopWidth: 0,
           elevation: 0,
           shadowOpacity: 0,

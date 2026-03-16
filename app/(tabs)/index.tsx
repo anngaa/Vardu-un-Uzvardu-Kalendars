@@ -1,6 +1,6 @@
-import React, { useMemo, useState } from "react";
-import { ScrollView, Text, TouchableOpacity, View, Platform } from "react-native";
 import { StatusBar } from "expo-status-bar";
+import React, { useMemo, useState } from "react";
+import { Platform, ScrollView, Text, TouchableOpacity, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import DayPills from "../../components/DayPills";
 import NameCard from "../../components/NameCard";

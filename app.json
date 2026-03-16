@@ -1,5 +1,5 @@
 {
-    "expo": {
+  "expo": {
     "name": "kalendars",
     "slug": "kalendars",
     "version": "1.0.0",
@@ -9,8 +9,9 @@
     "userInterfaceStyle": "automatic",
     "backgroundColor": "#efefef",
     "androidNavigationBar": {
-      "backgroundColor": "#efefef",
-      "barStyle": "dark-content"
+      "backgroundColor": "transparent",
+      "barStyle": "dark-content",
+      "enforceContrast": false
     },
     "splash": {
       "image": "./assets/images/splash-icon.png",
@@ -24,11 +25,7 @@
       }
     },
     "android": {
-      "permissions": [
-        "READ_CONTACTS",
-        "RECEIVE_BOOT_COMPLETED",
-        "VIBRATE"
-      ],
+      "permissions": ["READ_CONTACTS", "RECEIVE_BOOT_COMPLETED", "VIBRATE"],
       "backgroundColor": "#efefef",
       "adaptiveIcon": {
         "backgroundColor": "#E6F4FE",
@@ -39,10 +36,6 @@
       "statusBar": {
         "barStyle": "dark-content",
         "translucent": true
-      },
-      "navigationBar": {
-        "backgroundColor": "#efefef",
-        "barStyle": "dark-content"
       },
       "predictiveBackGestureEnabled": false,
       "package": "com.anngaa.kalendars"

@@ -78,14 +78,19 @@ export default function RootLayout() {
   };
 
   return (
-    <SafeAreaProvider style={{ flex: 1, backgroundColor: '#efefef' }}>
-      <ThemeProvider value={appTheme}>
-        <View style={{ flex: 1, backgroundColor: '#efefef' }}>
-          <Stack screenOptions={{ headerShown: false, contentStyle: { backgroundColor: '#efefef' } }}>
+    <SafeAreaProvider>
+      <View style={{ flex: 1, backgroundColor: '#efefef' }}>
+        <ThemeProvider value={appTheme}>
+          <Stack
+            screenOptions={{
+              headerShown: false,
+              contentStyle: { backgroundColor: '#efefef' },
+            }}
+          >
             <Stack.Screen name="index" />
           </Stack>
-        </View>
-      </ThemeProvider>
+        </ThemeProvider>
+      </View>
     </SafeAreaProvider>
   );
 }

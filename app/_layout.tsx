@@ -1,23 +1,22 @@
-import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
 import { useFonts } from 'expo-font';
 import { Stack } from 'expo-router';
+import * as NavigationBar from 'expo-navigation-bar';
 import * as SplashScreen from 'expo-splash-screen';
 import { useEffect } from 'react';
+import { AppState, Platform, View } from 'react-native';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { DefaultTheme, ThemeProvider } from '@react-navigation/native';
 import 'react-native-reanimated';
-
-import { useColorScheme } from '@/components/useColorScheme';
+import '../global.css';
 
 export {
-  // Catch any errors thrown by the Layout component.
-  ErrorBoundary,
+  ErrorBoundary
 } from 'expo-router';
 
 export const unstable_settings = {
-  // Ensure that reloading on `/modal` keeps a back button present.
-  initialRouteName: '(tabs)',
+  initialRouteName: 'index',
 };
 
-// Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
@@ -25,7 +24,6 @@ export default function RootLayout() {
     SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
   });
 
-  // Expo Router uses Error Boundaries to catch errors in the navigation tree.
   useEffect(() => {
     if (error) throw error;
   }, [error]);
@@ -36,22 +34,56 @@ export default function RootLayout() {
     }
   }, [loaded]);
 
+  useEffect(() => {
+    if (Platform.OS === 'android') {
+      const setupNavBar = async () => {
+        try {
+          // System root edge-to-edge drošībai un React Navigation apakšai
+          // Piespiedu kārtā iestatām fonu, pat ja ir edge-to-edge (uz Android 12 tas var palīdzēt)
+          await NavigationBar.setBackgroundColorAsync('#efefef');
+          await NavigationBar.setButtonStyleAsync('dark');
+        } catch (e) {
+          console.error('RootLayout: Failed to setup navigation bar:', e);
+        }
+      };
+
+      // Initial setup
+      setupNavBar();
+
+      // Re-apply on foreground to handle lifecycle resets
+      const subscription = AppState.addEventListener('change', (nextAppState) => {
+        if (nextAppState === 'active') {
+          setupNavBar();
+        }
+      });
+
+      return () => {
+        subscription.remove();
+      };
+    }
+  }, []);
+
   if (!loaded) {
     return null;
   }
 
-  return <RootLayoutNav />;
-}
-
-function RootLayoutNav() {
-  const colorScheme = useColorScheme();
+  const appTheme = {
+    ...DefaultTheme,
+    colors: {
+      ...DefaultTheme.colors,
+      background: '#efefef',
+    },
+  };
 
   return (
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="modal" options={{ presentation: 'modal' }} />
-      </Stack>
-    </ThemeProvider>
+    <SafeAreaProvider style={{ flex: 1, backgroundColor: '#efefef' }}>
+      <ThemeProvider value={appTheme}>
+        <View style={{ flex: 1, backgroundColor: '#efefef' }}>
+          <Stack screenOptions={{ headerShown: false, contentStyle: { backgroundColor: '#efefef' } }}>
+            <Stack.Screen name="index" />
+          </Stack>
+        </View>
+      </ThemeProvider>
+    </SafeAreaProvider>
   );
 }

@@ -1,0 +1,62 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Expo: Start Development Server",
+      "type": "shell",
+      "command": "npx expo start --clear",
+      "isBackground": true,
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "new",
+        "group": "expo"
+      }
+    },
+    {
+      "label": "Expo: Start Development Server for Custom Dev Client",
+      "type": "shell",
+      "command": "npx expo start --dev-client --clear",
+      "isBackground": true,
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "new",
+        "group": "expo"
+      }
+    },
+    {
+      "label": "EAS: Build Android Development (Dev Client)",
+      "type": "shell",
+      "command": "eas build --profile development --platform android",
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "new",
+        "group": "eas"
+      }
+    },
+    {
+      "label": "EAS: Build Android Preview (For Clients/Testing)",
+      "type": "shell",
+      "command": "eas build --profile preview --platform android",
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "new",
+        "group": "eas"
+      }
+    },
+    {
+      "label": "EAS: Send Over-The-Air Update (Fix Bugs)",
+      "type": "shell",
+      "command": "eas update --branch main --message \"OTA Update\"",
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "new",
+        "group": "eas"
+      }
+    }
+  ]
+}

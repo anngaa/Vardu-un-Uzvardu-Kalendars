@@ -55,7 +55,7 @@ export default function RootLayout() {
               contentStyle: { backgroundColor: '#efefef' },
             }}
           >
-            <Stack.Screen name="index" />
+            <Stack.Screen name="(tabs)" />
           </Stack>
         </ThemeProvider>
       </View>

@@ -74,7 +74,6 @@ export default function HomeScreen() {
                     }} />
 
                     <View>
-                    <View>
                         <View className="flex-row items-center justify-between px-6 pt-4 pb-2">
                             <View className="flex-row items-center flex-1">
                                 {isSearching && (

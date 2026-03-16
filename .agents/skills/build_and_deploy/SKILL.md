@@ -16,9 +16,9 @@ eas build --profile development --platform android
 ```
 
 ## Natīvā konfigurācija
-- **Android Navigation Bar:** Tiek iestatīta `_layout.tsx` failā un `app.json`.
-- **SystemUI:** `SystemUI.setBackgroundColorAsync('#efefef')` ir kritisks, lai novērstu balto fonu caurspīdīgajām sistēmas pogām.
-- **OTA Updates:** JavaScript un aseta izmaiņas var nosūtīt caur Metro serveri (`r` terminālī). Natīvās izmaiņas (jaunas bibliotēkas) prasa jaunu EAS build.
+Aplikācija izmanto **edge-to-edge** režīmu, tāpēc natīvās API fonu funkcijas (piem., `setBackgroundColorAsync`) tiek ignorētas. Krāsu kontrole notiek caur layout elementiem:
+- **Root View:** `app/_layout.tsx` failā root `View` elementam ir jābūt ar `flex:1` un pareizo `backgroundColor`.
+- **BottomTabBar:** Custom komponentei `components/BottomTabBar.tsx` ir jānodrošina pietiekams padding apakšā (`insets.bottom`), lai fons nosegtu sistēmas joslu.
 
 ## GitHub integrācija
 Pirms katra jauna build'a ir ieteicams veikt `git push`, lai EAS varētu izmantot jaunāko koda versiju.
@@ -26,6 +26,6 @@ Repozitorijs: `https://github.com/anngaa/Vardu-un-Uzvardu-Kalendars.git`
 
 ## Problēmu novēršana
 Ja pēc izmaiņām navigācijas josla kļūst balta:
-1. Pārbaudiet `app.json` - `backgroundColor` jābūt `#efefef`.
-2. Pārbaudiet `app/_layout.tsx` - `SystemUI` un `NavigationBar` krāsām jābūt iestatītām.
-3. Veiciet jaunu EAS build, ja tika mainītas pakotnes.
+1. Pārbaudiet `app/_layout.tsx` - vai root `View` ir `flex:1` un ar pareizo krāsu.
+2. Pārbaudiet `components/BottomTabBar.tsx` - vai padding apakšā ir vismaz `insets.bottom`.
+3. Pārbaudiet `app.json` - `backgroundColor` jābūt saskaņotam.

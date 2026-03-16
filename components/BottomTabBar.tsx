@@ -20,40 +20,39 @@ export default function BottomTabBar({ activeTab, onTabChange }: BottomTabBarPro
     ];
 
     return (
-        <View className="bg-[#efefef]">
+        <View 
+            className="bg-[#efefef]"
+            style={{
+                paddingBottom: Platform.OS === 'android' ? Math.max(insets.bottom, 12) : insets.bottom,
+            }}
+        >
             <View
-                className="flex-row items-center justify-around bg-[#efefef]"
+                className="flex-row items-center justify-around"
                 style={{
                     paddingTop: 10,
-                    paddingBottom: Platform.select({ android: 4, default: 8 }),
+                    paddingBottom: 4,
                 }}
             >
                 {tabs.map((tab) => {
                     const isActive = activeTab === tab.key;
-                return (
-                    <TouchableOpacity
-                        key={tab.key}
-                        onPress={() => onTabChange(tab.key)}
-                        className="items-center justify-center pt-2 pb-1 px-4 min-w-[70px]"
-                    >
-                        <SolarIcon
-                            name={tab.icon}
-                            size={24}
-                            color={isActive ? "#262626" : "#737373"}
-                        />
-                        <Text className={`text-[10px] mt-1 ${isActive ? "text-neutral-800 font-semibold" : "text-neutral-500 font-medium"}`}>
-                            {tab.label}
-                        </Text>
-                    </TouchableOpacity>
-                );
-            })}
+                    return (
+                        <TouchableOpacity
+                            key={tab.key}
+                            onPress={() => onTabChange(tab.key)}
+                            className="items-center justify-center pt-2 pb-1 px-4 min-w-[70px]"
+                        >
+                            <SolarIcon
+                                name={tab.icon}
+                                size={24}
+                                color={isActive ? "#262626" : "#737373"}
+                            />
+                            <Text className={`text-[10px] mt-1 ${isActive ? "text-neutral-800 font-semibold" : "text-neutral-500 font-medium"}`}>
+                                {tab.label}
+                            </Text>
+                        </TouchableOpacity>
+                    );
+                })}
             </View>
-            <View 
-                style={{ 
-                    height: Platform.OS === 'android' ? Math.max(insets.bottom, 2) : insets.bottom, 
-                    backgroundColor: '#efefef' 
-                }} 
-            />
         </View>
     );
 }

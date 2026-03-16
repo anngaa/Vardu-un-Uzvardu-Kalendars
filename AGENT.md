@@ -38,8 +38,10 @@ Aplikācija fokusējas uz "premium" un tīru vizuālo identitāti.
 - Meklēšanas loģika parasti tiek realizēta caur `components/SearchView.tsx`.
 
 ## Native un Build specifika
-- **Android Navigation Bar:** Tiek izmantots `expo-system-ui`, lai iestatītu `Window Background` uz `#efefef`. Tas novērš balto joslu zem caurspīdīgajām sistēmas pogām.
-- **Piezīme:** Mainot natīvās atkarības (piem., instalējot jaunu pakotni ar `npx expo install`), OBLIGĀTI nepieciešams jauns EAS build (`eas build --profile development --platform android`).
+- **Android Navigation Bar:** Tā kā aplikācija izmanto edge-to-edge režīmu, natīvās API funkcijas (piem., `setBackgroundColorAsync`) tiek ignorētas. Tā vietā krāsa tiek kontrolēta caur:
+  1. Root `View` (ar `flex:1` un `backgroundColor: '#efefef'`) `app/_layout.tsx` failā.
+  2. `BottomTabBar.tsx` apakšējo paddingu, kas aizpilda sistēmas joslas zonu.
+- **Piezīme:** Mainot natīvās atkarības (piem., instalējot jaunas pakotnes), OBLIGĀTI nepieciešams jauns EAS build.
 
 ## Darba plūsma
 1. Visas UI izmaiņas jāveic, ievērojot esošo krāsu paleti un Tailwind klašu stilu.

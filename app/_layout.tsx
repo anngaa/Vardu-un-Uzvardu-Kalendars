@@ -1,10 +1,8 @@
 import { useFonts } from 'expo-font';
 import { Stack } from 'expo-router';
-import * as NavigationBar from 'expo-navigation-bar';
 import * as SplashScreen from 'expo-splash-screen';
-import * as SystemUI from 'expo-system-ui';
 import { useEffect } from 'react';
-import { AppState, Platform, View } from 'react-native';
+import { View } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { DefaultTheme, ThemeProvider } from '@react-navigation/native';
 import 'react-native-reanimated';
@@ -34,36 +32,6 @@ export default function RootLayout() {
       SplashScreen.hideAsync();
     }
   }, [loaded]);
-
-  useEffect(() => {
-    if (Platform.OS === 'android') {
-      const setupNavBar = async () => {
-        try {
-          // System root edge-to-edge drošībai un React Navigation apakšai
-          // Piespiedu kārtā iestatām fonu, pat ja ir edge-to-edge (uz Android 12 tas var palīdzēt)
-          await SystemUI.setBackgroundColorAsync('#efefef');
-          await NavigationBar.setBackgroundColorAsync('#efefef');
-          await NavigationBar.setButtonStyleAsync('dark');
-        } catch (e) {
-          console.error('RootLayout: Failed to setup navigation bar:', e);
-        }
-      };
-
-      // Initial setup
-      setupNavBar();
-
-      // Re-apply on foreground to handle lifecycle resets
-      const subscription = AppState.addEventListener('change', (nextAppState) => {
-        if (nextAppState === 'active') {
-          setupNavBar();
-        }
-      });
-
-      return () => {
-        subscription.remove();
-      };
-    }
-  }, []);
 
   if (!loaded) {
     return null;

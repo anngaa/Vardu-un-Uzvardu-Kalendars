@@ -2,6 +2,7 @@ import { useFonts } from 'expo-font';
 import { Stack } from 'expo-router';
 import * as NavigationBar from 'expo-navigation-bar';
 import * as SplashScreen from 'expo-splash-screen';
+import * as SystemUI from 'expo-system-ui';
 import { useEffect } from 'react';
 import { AppState, Platform, View } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
@@ -40,6 +41,7 @@ export default function RootLayout() {
         try {
           // System root edge-to-edge drošībai un React Navigation apakšai
           // Piespiedu kārtā iestatām fonu, pat ja ir edge-to-edge (uz Android 12 tas var palīdzēt)
+          await SystemUI.setBackgroundColorAsync('#efefef');
           await NavigationBar.setBackgroundColorAsync('#efefef');
           await NavigationBar.setButtonStyleAsync('dark');
         } catch (e) {

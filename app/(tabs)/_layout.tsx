@@ -12,9 +12,9 @@ export default function TabLayout() {
       screenOptions={{
         headerShown: false,
         tabBarStyle: {
-          backgroundColor: "#efefef",
-          height: 60 + (Platform.OS === 'android' ? Math.max(insets.bottom, 12) : insets.bottom),
-          paddingBottom: Platform.OS === 'android' ? Math.max(insets.bottom, 12) : insets.bottom,
+          backgroundColor: "red", // RED TEST - mainīt atpakaļ uz #efefef vēlāk
+          height: 60 + insets.bottom,
+          paddingBottom: insets.bottom,
           borderTopWidth: 0,
           elevation: 0,
           shadowOpacity: 0,

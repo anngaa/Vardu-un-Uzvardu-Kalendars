@@ -34,23 +34,6 @@ export default function RootLayout() {
     }
   }, [loaded]);
 
-  useEffect(() => {
-    if (Platform.OS === 'android') {
-      const setupNavBar = async () => {
-        try {
-          // Force edge-to-edge by making navigation bar absolute
-          await NavigationBar.setPositionAsync('absolute');
-          // Make it almost transparent to see the root view background
-          await NavigationBar.setBackgroundColorAsync('#ffffff01');
-          await NavigationBar.setButtonStyleAsync('dark');
-        } catch (e) {
-          console.error('RootLayout: Failed to setup navigation bar:', e);
-        }
-      };
-      setupNavBar();
-    }
-  }, []);
-
   if (!loaded) {
     return null;
   }

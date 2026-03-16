@@ -1,14 +1,14 @@
-import React, { useState } from "react";
-import { Platform, ScrollView, Text, TouchableOpacity, View } from "react-native";
 import { StatusBar } from "expo-status-bar";
+import React, { useState } from "react";
+import { ScrollView, Text, TouchableOpacity, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import SolarIcon from "../../components/SolarIcon";
 import SearchView from "../../components/SearchView";
+import SolarIcon from "../../components/SolarIcon";
 
 export default function SettingsScreen() {
     const [isSearching, setIsSearching] = useState(false);
     const insets = useSafeAreaInsets();
-    
+
     const toggleSearch = () => {
         setIsSearching(!isSearching);
     };
@@ -17,7 +17,7 @@ export default function SettingsScreen() {
         <View className="flex-1 bg-[#f6f3ea]">
             <StatusBar style="dark" backgroundColor="#f6f3ea" translucent={true} />
             <View style={{ height: insets.top, backgroundColor: '#f6f3ea' }} />
-            
+
             <ScrollView className="flex-1 bg-white" contentContainerStyle={{ paddingBottom: 40 }}>
                 <View className="bg-[#f6f3ea]">
                     {/* headera apakšējās malas arka */}
@@ -31,9 +31,18 @@ export default function SettingsScreen() {
                         borderBottomLeftRadius: '100%',
                         borderBottomRightRadius: '100%',
                     }} />
-                    <View className="px-4 pb-4">
+                    <View className="px-4">
                         <View className="flex-row items-center justify-between px-2 pt-4 pb-2">
-                            <Text className="text-xl font-semibold text-neutral-800">Iestatījumi</Text>
+                            <View className="flex-row items-center flex-1">
+                                {isSearching && (
+                                    <TouchableOpacity onPress={toggleSearch} className="mr-2 p-1 -ml-1">
+                                        <SolarIcon name="alt-arrow-left-linear" size={24} color="#262626" />
+                                    </TouchableOpacity>
+                                )}
+                                <Text className="text-lg font-semibold text-neutral-800">
+                                    {isSearching ? "Meklēt" : "Iestatījumi"}
+                                </Text>
+                            </View>
                             <TouchableOpacity onPress={toggleSearch} className="p-2 -mr-2 items-center justify-center">
                                 <SolarIcon name="magnifer-linear" size={24} color={isSearching ? "#737373" : "#262626"} />
                             </TouchableOpacity>

@@ -74,10 +74,18 @@ export default function HomeScreen() {
                     }} />
 
                     <View>
+                    <View>
                         <View className="flex-row items-center justify-between px-6 pt-4 pb-2">
-                            <Text className="text-lg font-semibold text-neutral-800 tracking-tight leading-tight flex-1">
-                                Vārdu un Uzvārdu Kalendārs
-                            </Text>
+                            <View className="flex-row items-center flex-1">
+                                {isSearching && (
+                                    <TouchableOpacity onPress={toggleSearch} className="mr-2 p-1 -ml-1">
+                                        <SolarIcon name="alt-arrow-left-linear" size={24} color="#262626" />
+                                    </TouchableOpacity>
+                                )}
+                                <Text className="text-lg font-semibold text-neutral-800 tracking-tight leading-tight flex-1">
+                                    {isSearching ? "Meklēt" : "Vārdu un Uzvārdu Kalendārs"}
+                                </Text>
+                            </View>
                             <TouchableOpacity onPress={toggleSearch} className="p-2 -mr-2 items-center justify-center">
                                 <SolarIcon name="magnifer-linear" size={24} color={isSearching ? "#737373" : "#262626"} />
                             </TouchableOpacity>

@@ -1,6 +1,6 @@
-import React, { useMemo, useState } from "react";
-import { Platform, ScrollView, Text, TouchableOpacity, View } from "react-native";
 import { StatusBar } from "expo-status-bar";
+import React, { useMemo, useState } from "react";
+import { ScrollView, Text, TouchableOpacity, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import MonthCalendar from "../../components/MonthCalendar";
 import NameCard from "../../components/NameCard";
@@ -79,15 +79,24 @@ export default function CalendarScreen() {
                         borderBottomLeftRadius: '100%',
                         borderBottomRightRadius: '100%',
                     }} />
-                    
-                    <View className="px-4 pb-4">
+
+                    <View className="px-4">
                         <View className="flex-row items-center justify-between px-2 pt-4 pb-2">
-                            <Text className="text-xl font-semibold text-neutral-800">Kalendārs</Text>
+                            <View className="flex-row items-center flex-1">
+                                {isSearching && (
+                                    <TouchableOpacity onPress={toggleSearch} className="mr-2 p-1 -ml-1">
+                                        <SolarIcon name="alt-arrow-left-linear" size={24} color="#262626" />
+                                    </TouchableOpacity>
+                                )}
+                                <Text className="text-lg font-semibold text-neutral-800">
+                                    {isSearching ? "Meklēt" : "Kalendārs"}
+                                </Text>
+                            </View>
                             <TouchableOpacity onPress={toggleSearch} className="p-2 -mr-2 items-center justify-center">
                                 <SolarIcon name="magnifer-linear" size={24} color={isSearching ? "#737373" : "#262626"} />
                             </TouchableOpacity>
                         </View>
-                        
+
                         {isSearching ? (
                             <View className="mt-2">
                                 <SearchView />

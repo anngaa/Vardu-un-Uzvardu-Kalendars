@@ -24,15 +24,19 @@ function getDateKey(date: Date): string {
 
 export default function CalendarScreen() {
     const today = useMemo(() => new Date(), []);
-    const [selectedDate, setSelectedDate] = useState(today);
+    const [selectedDate, setSelectedDate] = useState<Date>(today);
     const [calMonth, setCalMonth] = useState(today.getMonth());
     const [calYear, setCalYear] = useState(today.getFullYear());
 
-    const dateKey = getDateKey(selectedDate);
-    const dayData = (namedays as Record<string, { names: string[]; extended: string[] }>)[dateKey] || {
-        names: [],
-        extended: [],
-    };
+    // Defensive data fetching
+    const dayData = useMemo(() => {
+        if (!selectedDate || !(selectedDate instanceof Date)) return { names: [], extended: [] };
+        const dateKey = getDateKey(selectedDate);
+        return (namedays as Record<string, { names: string[]; extended: string[] }>)[dateKey] || {
+            names: [],
+            extended: [],
+        };
+    }, [selectedDate]);
 
     const handleChangeMonth = (delta: number) => {
         let newMonth = calMonth + delta;
@@ -44,7 +48,9 @@ export default function CalendarScreen() {
     };
 
     const handleSelectDate = (date: Date) => {
-        setSelectedDate(date);
+        if (date && date instanceof Date && !isNaN(date.getTime())) {
+            setSelectedDate(date);
+        }
     };
 
     const insets = useSafeAreaInsets();

@@ -1,6 +1,6 @@
 import SolarIcon from "./SolarIcon";
 import React from "react";
-import { Text, TouchableOpacity, View } from "react-native";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 const LV_MONTHS = [
     "Janvāris", "Februāris", "Marts", "Aprīlis", "Maijs", "Jūnijs",
@@ -43,9 +43,9 @@ export default function MonthCalendar({
         today.getFullYear() === year;
 
     const isSelected = (day: number) =>
-        selectedDate.getDate() === day &&
-        selectedDate.getMonth() === month &&
-        selectedDate.getFullYear() === year;
+        selectedDate?.getDate?.() === day &&
+        selectedDate?.getMonth?.() === month &&
+        selectedDate?.getFullYear?.() === year;
 
     const cells: (number | null)[] = [];
     for (let i = 0; i < firstDay; i++) cells.push(null);
@@ -58,57 +58,56 @@ export default function MonthCalendar({
     }
 
     return (
-        <View className="my-2">
+        <View style={styles.container}>
             {/* Month nav */}
-            <View className="flex-row items-center justify-between mb-5">
-                <TouchableOpacity onPress={() => onChangeMonth(-1)} className="p-2">
+            <View style={styles.header}>
+                <TouchableOpacity onPress={() => onChangeMonth(-1)} style={styles.navButton}>
                     <SolarIcon name="alt-arrow-left-linear" size={20} color="#4b5563" />
                 </TouchableOpacity>
-                <Text className="text-lg font-bold text-neutral-800">
+                <Text style={styles.monthText}>
                     {LV_MONTHS[month]} {year}
                 </Text>
-                <TouchableOpacity onPress={() => onChangeMonth(1)} className="p-2">
+                <TouchableOpacity onPress={() => onChangeMonth(1)} style={styles.navButton}>
                     <SolarIcon name="alt-arrow-right-linear" size={20} color="#4b5563" />
                 </TouchableOpacity>
             </View>
 
             {/* Weekday headers */}
-            <View className="flex-row mb-2">
+            <View style={styles.weekdayRow}>
                 {LV_WEEKDAYS_SHORT.map((wd, i) => (
-                    <View key={i} className="flex-1 items-center">
-                        <Text className="text-xs font-semibold text-neutral-400">{wd}</Text>
+                    <View key={`wd-${i}`} style={styles.weekdayCell}>
+                        <Text style={styles.weekdayText}>{wd}</Text>
                     </View>
                 ))}
             </View>
 
             {/* Day grid */}
-            {weeks.map((week, wi) => (
-                <View key={wi} className="flex-row">
-                    {week.map((day, di) => (
-                        <View key={di} className="flex-1 items-center py-1.5">
-                            {day ? (
+            {(weeks || []).map((week, wi) => (
+                <View key={`week-${wi}`} style={styles.row}>
+                    {(week || []).map((day, di) => (
+                        <View key={`day-${wi}-${di}`} style={styles.dayContainer}>
+                            {day !== null ? (
                                 <TouchableOpacity
-                                    onPress={() => onSelectDate(new Date(year, month, day))}
-                                    className={`w-10 h-10 rounded-full items-center justify-center ${isSelected(day)
-                                        ? "bg-neutral-800 shadow-sm"
-                                        : isToday(day)
-                                            ? "bg-[#dcfce7]"
-                                            : ""
-                                        }`}
+                                    onPress={() => onSelectDate?.(new Date(year, month, day))}
+                                    activeOpacity={0.7}
+                                    style={[
+                                        styles.dayButton,
+                                        isSelected(day) && styles.selectedDay,
+                                        isToday(day) && !isSelected(day) && styles.todayDay
+                                    ]}
                                 >
                                     <Text
-                                        className={`text-[15px] ${isSelected(day)
-                                            ? "text-white font-bold"
-                                            : isToday(day)
-                                                ? "text-neutral-900 font-bold"
-                                                : "text-neutral-700"
-                                            }`}
+                                        style={[
+                                            styles.dayText,
+                                            isSelected(day) && styles.selectedDayText,
+                                            isToday(day) && styles.todayDayText
+                                        ]}
                                     >
                                         {day}
                                     </Text>
                                 </TouchableOpacity>
                             ) : (
-                                <View className="w-10 h-10" />
+                                <View style={styles.daySpacer} />
                             )}
                         </View>
                     ))}
@@ -117,3 +116,80 @@ export default function MonthCalendar({
         </View>
     );
 }
+
+const styles = StyleSheet.create({
+    container: {
+        marginVertical: 8,
+    },
+    header: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        marginBottom: 20,
+    },
+    navButton: {
+        padding: 8,
+    },
+    monthText: {
+        fontSize: 18,
+        fontWeight: 'bold',
+        color: '#262626',
+        flex: 1,
+        textAlign: 'center',
+    },
+    weekdayRow: {
+        flexDirection: 'row',
+        marginBottom: 8,
+    },
+    weekdayCell: {
+        flex: 1,
+        alignItems: 'center',
+    },
+    weekdayText: {
+        fontSize: 12,
+        fontWeight: '600',
+        color: '#a3a3a3',
+    },
+    row: {
+        flexDirection: 'row',
+    },
+    dayContainer: {
+        flex: 1,
+        alignItems: 'center',
+        paddingVertical: 6,
+    },
+    dayButton: {
+        width: 40,
+        height: 40,
+        borderRadius: 20,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    selectedDay: {
+        backgroundColor: '#262626',
+        elevation: 2,
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 1 },
+        shadowOpacity: 0.1,
+        shadowRadius: 2,
+    },
+    todayDay: {
+        backgroundColor: '#dcfce7',
+    },
+    dayText: {
+        fontSize: 15,
+        color: '#404040',
+    },
+    selectedDayText: {
+        color: '#ffffff',
+        fontWeight: 'bold',
+    },
+    todayDayText: {
+        color: '#171717',
+        fontWeight: 'bold',
+    },
+    daySpacer: {
+        width: 40,
+        height: 40,
+    }
+});

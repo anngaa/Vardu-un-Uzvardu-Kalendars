@@ -87,10 +87,10 @@ export default function HomeScreen() {
 
                     <View>
                         <View className="flex-row items-center justify-between px-6 pt-4 pb-2">
-                            <Text className="text-xl font-semibold text-neutral-800 tracking-tight">
-                                {LV_MONTHS[today.getMonth()]} {today.getDate()}
+                            <Text className="text-lg font-semibold text-neutral-800 tracking-tight leading-tight flex-1">
+                                Vārdu un Uzvārdu Kalendārs
                             </Text>
-                            <TouchableOpacity onPress={toggleSearch} className="p-2 -mr-2">
+                            <TouchableOpacity onPress={toggleSearch} className="p-2 -mr-2 items-center justify-center">
                                 <SolarIcon name="magnifer-linear" size={24} color={isSearching ? "#737373" : "#262626"} />
                             </TouchableOpacity>
                         </View>

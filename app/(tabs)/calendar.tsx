@@ -1,5 +1,5 @@
 import React, { useMemo, useState } from "react";
-import { ScrollView, Text, View } from "react-native";
+import { Platform, ScrollView, Text, View } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import MonthCalendar from "../../components/MonthCalendar";
@@ -61,15 +61,29 @@ export default function CalendarScreen() {
             <View style={{ height: insets.top, backgroundColor: '#f6f3ea' }} />
 
             <ScrollView className="flex-1 bg-white" contentContainerStyle={{ paddingBottom: 40 }}>
-                <View className="bg-[#f6f3ea] px-4 pb-10 rounded-b-[40px]">
-                    <Text className="text-xl font-semibold text-neutral-800 pt-4 pb-2 px-2">Kalendārs</Text>
-                    <MonthCalendar
-                        selectedDate={selectedDate}
-                        onSelectDate={handleSelectDate}
-                        month={calMonth}
-                        year={calYear}
-                        onChangeMonth={handleChangeMonth}
-                    />
+                <View className="bg-[#f6f3ea]">
+                    {/* headera apakšējās malas arka */}
+                    <View style={{
+                        position: 'absolute',
+                        bottom: -10,
+                        left: 0,
+                        right: 0,
+                        height: 10,
+                        backgroundColor: '#f6f3ea',
+                        borderBottomLeftRadius: '100%',
+                        borderBottomRightRadius: '100%',
+                    }} />
+                    
+                    <View className="px-4 pb-4">
+                        <Text className="text-xl font-semibold text-neutral-800 pt-4 pb-2 px-2">Kalendārs</Text>
+                        <MonthCalendar
+                            selectedDate={selectedDate}
+                            onSelectDate={handleSelectDate}
+                            month={calMonth}
+                            year={calYear}
+                            onChangeMonth={handleChangeMonth}
+                        />
+                    </View>
                 </View>
 
                 <View className="px-4 pt-6">

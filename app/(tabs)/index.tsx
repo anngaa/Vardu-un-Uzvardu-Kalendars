@@ -1,6 +1,6 @@
 import { StatusBar } from "expo-status-bar";
 import React, { useMemo, useState } from "react";
-import { Platform, ScrollView, Text, TouchableOpacity, View } from "react-native";
+import { ScrollView, Text, TouchableOpacity, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import DayPills from "../../components/DayPills";
 import NameCard from "../../components/NameCard";
@@ -61,28 +61,16 @@ export default function HomeScreen() {
                 showsVerticalScrollIndicator={false}
             >
                 <View className="bg-[#f6f3ea]">
-                    <View
-                        className="absolute bg-[#f6f3ea]"
-                        style={{
-                            width: '100%',
-                            height: 10,
-                            bottom: -10,
-                            borderBottomLeftRadius: Platform.OS === 'ios' ? 50 : 100, // Adjusted for RN web/android inconsistencies if any
-                            borderBottomRightRadius: Platform.OS === 'ios' ? 50 : 100,
-                            // borderRadius as string/percentage can be tricky in RN, using large values
-                        }}
-                    />
-                    {/* Using a better approach for the arc in RN */}
+                    {/* headera apakšējās malas arka */}
                     <View style={{
                         position: 'absolute',
-                        bottom: -15,
+                        bottom: -10,
                         left: 0,
                         right: 0,
-                        height: 30,
+                        height: 10,
                         backgroundColor: '#f6f3ea',
-                        borderBottomLeftRadius: 100,
-                        borderBottomRightRadius: 100,
-                        transform: [{ scaleX: 1.5 }]
+                        borderBottomLeftRadius: '100%',
+                        borderBottomRightRadius: '100%',
                     }} />
 
                     <View>
@@ -105,11 +93,10 @@ export default function HomeScreen() {
                                 />
                             )}
                         </View>
-                        <View style={{ height: 10 }} />
                     </View>
                 </View>
 
-                <View className="px-4 pt-10">
+                <View className="px-4 pt-6">
                     <NameCard
                         dayOfWeek={LV_WEEKDAYS[selectedDate.getDay()]}
                         monthName={LV_MONTHS[selectedDate.getMonth()]}

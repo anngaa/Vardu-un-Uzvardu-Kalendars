@@ -15,10 +15,9 @@
 ## Dizaina principi un estētika
 Aplikācija fokusējas uz "premium" un tīru vizuālo identitāti.
 - **Krāsu palete:**
-  - Galvenais fons (Header): `#f6f3ea` (krēmkrāsa).
+  - Galvenais fons (Header, Bottom Tab, Navigation): `#f6f3ea` (krēmkrāsa).
   - Satura fons (Main Content): `#ffffff` (balts).
   - Vārda dienu baloni (Bubbles): `#eff2e9` (zaļgana krēmkrāsa).
-  - Apakšējā tabu josla un sistēmas navigācija (Bottom Tab & Nav): `#efefef` (pelēks).
   - Teksts/Ikonas (Active): `#262626`.
   - Teksts/Ikonas (Inactive): `#737373`.
 - **Ikonas:** Custom SVG komponentes no `components/SolarIcon.tsx`. Alfabēta secībā sakārtotas lineārās ikonas.

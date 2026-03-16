@@ -96,13 +96,13 @@ export default function MonthCalendar({
                                         isToday(day) && !isSelected(day) && styles.todayDay
                                     ]}
                                 >
-                                    <Text
-                                        style={[
-                                            styles.dayText,
-                                            isSelected(day) && styles.selectedDayText,
-                                            isToday(day) && styles.todayDayText
-                                        ]}
-                                    >
+                                        <Text
+                                            style={[
+                                                styles.dayText,
+                                                isToday(day) && styles.todayDayText,
+                                                isSelected(day) && styles.selectedDayText
+                                            ]}
+                                        >
                                         {day}
                                     </Text>
                                 </TouchableOpacity>

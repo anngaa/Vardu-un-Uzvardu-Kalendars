@@ -49,18 +49,18 @@ export default function RootLayout() {
     ...DefaultTheme,
     colors: {
       ...DefaultTheme.colors,
-      background: '#efefef',
+      background: '#f6f3ea',
     },
   };
 
   return (
     <SafeAreaProvider>
-      <View style={{ flex: 1, backgroundColor: '#efefef' }}>
+      <View style={{ flex: 1, backgroundColor: '#f6f3ea' }}>
         <ThemeProvider value={appTheme}>
           <Stack
             screenOptions={{
               headerShown: false,
-              contentStyle: { backgroundColor: '#efefef' },
+              contentStyle: { backgroundColor: '#f6f3ea' },
             }}
           >
             <Stack.Screen name="(tabs)" />

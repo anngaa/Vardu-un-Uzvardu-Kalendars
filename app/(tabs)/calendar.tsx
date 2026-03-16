@@ -1,9 +1,11 @@
 import React, { useMemo, useState } from "react";
-import { Platform, ScrollView, Text, View } from "react-native";
+import { Platform, ScrollView, Text, TouchableOpacity, View } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import MonthCalendar from "../../components/MonthCalendar";
 import NameCard from "../../components/NameCard";
+import SearchView from "../../components/SearchView";
+import SolarIcon from "../../components/SolarIcon";
 import namedays from "../../data/namedays.json";
 
 const LV_MONTHS = [
@@ -24,6 +26,7 @@ function getDateKey(date: Date): string {
 
 export default function CalendarScreen() {
     const today = useMemo(() => new Date(), []);
+    const [isSearching, setIsSearching] = useState(false);
     const [selectedDate, setSelectedDate] = useState<Date>(today);
     const [calMonth, setCalMonth] = useState(today.getMonth());
     const [calYear, setCalYear] = useState(today.getFullYear());
@@ -53,6 +56,10 @@ export default function CalendarScreen() {
         }
     };
 
+    const toggleSearch = () => {
+        setIsSearching(!isSearching);
+    };
+
     const insets = useSafeAreaInsets();
 
     return (
@@ -60,9 +67,8 @@ export default function CalendarScreen() {
             <StatusBar style="dark" backgroundColor="#f6f3ea" translucent={true} />
             <View style={{ height: insets.top, backgroundColor: '#f6f3ea' }} />
 
-            <ScrollView className="flex-1 bg-white" contentContainerStyle={{ paddingBottom: 40 }}>
+            <ScrollView className="flex-1 bg-white" contentContainerStyle={{ paddingBottom: 40 }} showsVerticalScrollIndicator={false}>
                 <View className="bg-[#f6f3ea]">
-                    {/* headera apakšējās malas arka */}
                     <View style={{
                         position: 'absolute',
                         bottom: -10,
@@ -75,26 +81,40 @@ export default function CalendarScreen() {
                     }} />
                     
                     <View className="px-4 pb-4">
-                        <Text className="text-xl font-semibold text-neutral-800 pt-4 pb-2 px-2">Kalendārs</Text>
-                        <MonthCalendar
-                            selectedDate={selectedDate}
-                            onSelectDate={handleSelectDate}
-                            month={calMonth}
-                            year={calYear}
-                            onChangeMonth={handleChangeMonth}
-                        />
+                        <View className="flex-row items-center justify-between px-2 pt-4 pb-2">
+                            <Text className="text-xl font-semibold text-neutral-800">Kalendārs</Text>
+                            <TouchableOpacity onPress={toggleSearch} className="p-2 -mr-2 items-center justify-center">
+                                <SolarIcon name="magnifer-linear" size={24} color={isSearching ? "#737373" : "#262626"} />
+                            </TouchableOpacity>
+                        </View>
+                        
+                        {isSearching ? (
+                            <View className="mt-2">
+                                <SearchView />
+                            </View>
+                        ) : (
+                            <MonthCalendar
+                                selectedDate={selectedDate}
+                                onSelectDate={handleSelectDate}
+                                month={calMonth}
+                                year={calYear}
+                                onChangeMonth={handleChangeMonth}
+                            />
+                        )}
                     </View>
                 </View>
 
-                <View className="px-4 pt-6">
-                    <NameCard
-                        dayOfWeek={LV_WEEKDAYS[selectedDate.getDay()]}
-                        monthName={LV_MONTHS[selectedDate.getMonth()]}
-                        dayNumber={selectedDate.getDate()}
-                        names={dayData.names}
-                        extended={dayData.extended}
-                    />
-                </View>
+                {!isSearching && (
+                    <View className="px-4 pt-6">
+                        <NameCard
+                            dayOfWeek={LV_WEEKDAYS[selectedDate.getDay()]}
+                            monthName={LV_MONTHS[selectedDate.getMonth()]}
+                            dayNumber={selectedDate.getDate()}
+                            names={dayData.names}
+                            extended={dayData.extended}
+                        />
+                    </View>
+                )}
             </ScrollView>
         </View>
     );

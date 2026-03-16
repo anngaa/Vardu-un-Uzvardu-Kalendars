@@ -1,10 +1,18 @@
-import React from "react";
-import { Platform, ScrollView, Text, View } from "react-native";
+import React, { useState } from "react";
+import { Platform, ScrollView, Text, TouchableOpacity, View } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import SolarIcon from "../../components/SolarIcon";
+import SearchView from "../../components/SearchView";
 
 export default function SettingsScreen() {
+    const [isSearching, setIsSearching] = useState(false);
     const insets = useSafeAreaInsets();
+    
+    const toggleSearch = () => {
+        setIsSearching(!isSearching);
+    };
+
     return (
         <View className="flex-1 bg-[#f6f3ea]">
             <StatusBar style="dark" backgroundColor="#f6f3ea" translucent={true} />
@@ -24,14 +32,26 @@ export default function SettingsScreen() {
                         borderBottomRightRadius: '100%',
                     }} />
                     <View className="px-4 pb-4">
-                        <Text className="text-xl font-semibold text-neutral-800 pt-4 pb-2 px-2">Iestatījumi</Text>
-                        <View className="h-4" />
+                        <View className="flex-row items-center justify-between px-2 pt-4 pb-2">
+                            <Text className="text-xl font-semibold text-neutral-800">Iestatījumi</Text>
+                            <TouchableOpacity onPress={toggleSearch} className="p-2 -mr-2 items-center justify-center">
+                                <SolarIcon name="magnifer-linear" size={24} color={isSearching ? "#737373" : "#262626"} />
+                            </TouchableOpacity>
+                        </View>
+                        {isSearching && (
+                            <View className="mt-2">
+                                <SearchView />
+                            </View>
+                        )}
+                        {!isSearching && <View className="h-4" />}
                     </View>
                 </View>
 
-                <View className="flex-1 items-center justify-center pt-6">
-                    <Text className="text-neutral-400">Vēl top...</Text>
-                </View>
+                {!isSearching && (
+                    <View className="flex-1 items-center justify-center pt-6">
+                        <Text className="text-neutral-400">Vēl top...</Text>
+                    </View>
+                )}
             </ScrollView>
         </View>
     );

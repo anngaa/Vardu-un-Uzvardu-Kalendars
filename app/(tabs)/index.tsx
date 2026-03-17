@@ -45,6 +45,14 @@ export default function HomeScreen() {
 
     const insets = useSafeAreaInsets();
 
+    const headerTitle = useMemo(() => {
+        if (isSearching) return "Meklēt";
+        const weekday = LV_WEEKDAYS[selectedDate.getDay()];
+        const day = selectedDate.getDate();
+        const month = LV_MONTHS[selectedDate.getMonth()].toLowerCase();
+        return `${weekday}, ${day}. ${month}`;
+    }, [isSearching, selectedDate]);
+
     return (
         <View className="flex-1 bg-[#efefef]">
             <StatusBar
@@ -81,16 +89,16 @@ export default function HomeScreen() {
                                         <SolarIcon name="alt-arrow-left-linear" size={24} color="#262626" />
                                     </TouchableOpacity>
                                 )}
-                                <Text className="text-lg font-semibold text-neutral-800 tracking-tight leading-tight flex-1">
-                                    {isSearching ? "Meklēt" : "Vārdu un Uzvārdu Kalendārs"}
+                                <Text className="text-xl font-semibold text-neutral-800 tracking-tight leading-tight flex-1">
+                                    {headerTitle}
                                 </Text>
                             </View>
                             <TouchableOpacity onPress={toggleSearch} className="p-2 -mr-2 items-center justify-center">
-                                <SolarIcon name="magnifer-linear" size={24} color={isSearching ? "#737373" : "#262626"} />
+                                <SolarIcon name={isSearching ? "magnifer-bold" : "magnifer-linear"} size={24} color="#262626" />
                             </TouchableOpacity>
                         </View>
 
-                        <View className="px-4 mt-2">
+                        <View className="px-6 mt-2">
                             {isSearching ? (
                                 <SearchView />
                             ) : (
@@ -103,7 +111,7 @@ export default function HomeScreen() {
                     </View>
                 </View>
 
-                <View className="px-4 pt-6">
+                <View className="px-4 pt-8">
                     <NameCard
                         dayOfWeek={LV_WEEKDAYS[selectedDate.getDay()]}
                         monthName={LV_MONTHS[selectedDate.getMonth()]}

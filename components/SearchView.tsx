@@ -52,7 +52,7 @@ export default function SearchView() {
     return (
         <View className="mb-2 bg-transparent">
             {/* Search input */}
-            <View className="flex-row h-12 justify-center items-center bg-white rounded-full px-5 py-1 mb-4">
+            <View className="flex-row h-12 justify-center items-center bg-white rounded-full px-4 py-1 mb-4">
                 <SolarIcon name="magnifer-linear" size={20} color="#a3a3a3" />
                 <TextInput
                     value={query}

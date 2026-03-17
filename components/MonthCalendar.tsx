@@ -1,6 +1,6 @@
-import SolarIcon from "./SolarIcon";
 import React from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import SolarIcon from "./SolarIcon";
 
 const LV_MONTHS = [
     "Janvāris", "Februāris", "Marts", "Aprīlis", "Maijs", "Jūnijs",
@@ -26,6 +26,13 @@ function getFirstDayOfWeek(year: number, month: number): number {
     return day === 0 ? 6 : day - 1;
 }
 
+interface DayObject {
+    day: number;
+    month: number;
+    year: number;
+    isCurrentMonth: boolean;
+}
+
 export default function MonthCalendar({
     selectedDate,
     onSelectDate,
@@ -34,28 +41,75 @@ export default function MonthCalendar({
     onChangeMonth,
 }: MonthCalendarProps) {
     const daysInMonth = getDaysInMonth(year, month);
-    const firstDay = getFirstDayOfWeek(year, month);
+    const firstDayIdx = getFirstDayOfWeek(year, month);
 
     const today = new Date();
-    const isToday = (day: number) =>
-        today.getDate() === day &&
-        today.getMonth() === month &&
-        today.getFullYear() === year;
+    const isToday = (d: number, m: number, y: number) =>
+        today.getDate() === d &&
+        today.getMonth() === m &&
+        today.getFullYear() === y;
 
-    const isSelected = (day: number) =>
-        selectedDate?.getDate?.() === day &&
-        selectedDate?.getMonth?.() === month &&
-        selectedDate?.getFullYear?.() === year;
+    const isSelected = (d: number, m: number, y: number) =>
+        selectedDate?.getDate?.() === d &&
+        selectedDate?.getMonth?.() === m &&
+        selectedDate?.getFullYear?.() === y;
 
-    const cells: (number | null)[] = [];
-    for (let i = 0; i < firstDay; i++) cells.push(null);
-    for (let d = 1; d <= daysInMonth; d++) cells.push(d);
-    while (cells.length % 7 !== 0) cells.push(null);
+    const cells: DayObject[] = [];
 
-    const weeks: (number | null)[][] = [];
+    // Previous month days
+    const prevMonth = month === 0 ? 11 : month - 1;
+    const prevYear = month === 0 ? year - 1 : year;
+    const daysInPrevMonth = getDaysInMonth(prevYear, prevMonth);
+    for (let i = firstDayIdx - 1; i >= 0; i--) {
+        cells.push({
+            day: daysInPrevMonth - i,
+            month: prevMonth,
+            year: prevYear,
+            isCurrentMonth: false,
+        });
+    }
+
+    // Current month days
+    for (let d = 1; d <= daysInMonth; d++) {
+        cells.push({
+            day: d,
+            month: month,
+            year: year,
+            isCurrentMonth: true,
+        });
+    }
+
+    // Next month days
+    const nextMonth = month === 11 ? 0 : month + 1;
+    const nextYear = month === 11 ? year + 1 : year;
+    let nextDay = 1;
+    while (cells.length % 7 !== 0) {
+        cells.push({
+            day: nextDay++,
+            month: nextMonth,
+            year: nextYear,
+            isCurrentMonth: false,
+        });
+    }
+
+    const weeks: DayObject[][] = [];
     for (let i = 0; i < cells.length; i += 7) {
         weeks.push(cells.slice(i, i + 7));
     }
+
+    const handlePressDay = (item: DayObject) => {
+        const newDate = new Date(item.year, item.month, item.day);
+        onSelectDate?.(newDate);
+
+        // If clicked on a day from another month, navigate to that month
+        if (item.month !== month) {
+            if (item.year > year || (item.year === year && item.month > month)) {
+                onChangeMonth(1);
+            } else {
+                onChangeMonth(-1);
+            }
+        }
+    };
 
     return (
         <View style={styles.container}>
@@ -82,33 +136,31 @@ export default function MonthCalendar({
             </View>
 
             {/* Day grid */}
-            {(weeks || []).map((week, wi) => (
+            {weeks.map((week, wi) => (
                 <View key={`week-${wi}`} style={styles.row}>
-                    {(week || []).map((day, di) => (
+                    {week.map((item, di) => (
                         <View key={`day-${wi}-${di}`} style={styles.dayContainer}>
-                            {day !== null ? (
-                                <TouchableOpacity
-                                    onPress={() => onSelectDate?.(new Date(year, month, day))}
-                                    activeOpacity={0.7}
+                            <TouchableOpacity
+                                onPress={() => handlePressDay(item)}
+                                activeOpacity={0.7}
+                                style={[
+                                    styles.dayButton,
+                                    item.isCurrentMonth && isSelected(item.day, item.month, item.year) && styles.selectedDay,
+                                    item.isCurrentMonth && isToday(item.day, item.month, item.year) && !isSelected(item.day, item.month, item.year) && styles.todayDay,
+                                    !item.isCurrentMonth && styles.otherMonthDay
+                                ]}
+                            >
+                                <Text
                                     style={[
-                                        styles.dayButton,
-                                        isSelected(day) && styles.selectedDay,
-                                        isToday(day) && !isSelected(day) && styles.todayDay
+                                        styles.dayText,
+                                        !item.isCurrentMonth && styles.otherMonthDayText,
+                                        item.isCurrentMonth && isToday(item.day, item.month, item.year) && styles.todayDayText,
+                                        item.isCurrentMonth && isSelected(item.day, item.month, item.year) && styles.selectedDayText
                                     ]}
                                 >
-                                        <Text
-                                            style={[
-                                                styles.dayText,
-                                                isToday(day) && styles.todayDayText,
-                                                isSelected(day) && styles.selectedDayText
-                                            ]}
-                                        >
-                                        {day}
-                                    </Text>
-                                </TouchableOpacity>
-                            ) : (
-                                <View style={styles.daySpacer} />
-                            )}
+                                    {item.day}
+                                </Text>
+                            </TouchableOpacity>
                         </View>
                     ))}
                 </View>
@@ -174,7 +226,7 @@ const styles = StyleSheet.create({
         shadowRadius: 2,
     },
     todayDay: {
-        backgroundColor: '#dcfce7',
+        backgroundColor: '#2626261A',
     },
     dayText: {
         fontSize: 15,
@@ -187,6 +239,12 @@ const styles = StyleSheet.create({
     todayDayText: {
         color: '#171717',
         fontWeight: 'bold',
+    },
+    otherMonthDay: {
+        opacity: 0.5,
+    },
+    otherMonthDayText: {
+        color: '#737373',
     },
     daySpacer: {
         width: 40,

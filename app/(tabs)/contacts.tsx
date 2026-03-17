@@ -31,8 +31,8 @@ export default function ContactsScreen() {
                         borderBottomLeftRadius: '100%',
                         borderBottomRightRadius: '100%',
                     }} />
-                    <View className="px-4">
-                        <View className="flex-row items-center justify-between px-2 pt-4 pb-2">
+                    <View className="px-6">
+                        <View className="flex-row items-center justify-between pt-4 pb-2">
                             <View className="flex-row items-center flex-1">
                                 {isSearching && (
                                     <TouchableOpacity onPress={toggleSearch} className="mr-2 p-1 -ml-1">
@@ -44,7 +44,7 @@ export default function ContactsScreen() {
                                 </Text>
                             </View>
                             <TouchableOpacity onPress={toggleSearch} className="p-2 -mr-2 items-center justify-center">
-                                <SolarIcon name="magnifer-linear" size={24} color={isSearching ? "#737373" : "#262626"} />
+                                <SolarIcon name={isSearching ? "magnifer-bold" : "magnifer-linear"} size={24} color="#262626" />
                             </TouchableOpacity>
                         </View>
                         {isSearching && (
@@ -57,7 +57,7 @@ export default function ContactsScreen() {
                 </View>
 
                 {!isSearching && (
-                    <View className="flex-1 items-center justify-center pt-6">
+                    <View className="flex-1 items-center justify-center pt-8">
                         <Text className="text-neutral-400">Vēl top...</Text>
                     </View>
                 )}

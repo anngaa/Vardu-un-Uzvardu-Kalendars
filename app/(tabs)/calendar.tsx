@@ -80,8 +80,8 @@ export default function CalendarScreen() {
                         borderBottomRightRadius: '100%',
                     }} />
 
-                    <View className="px-4">
-                        <View className="flex-row items-center justify-between px-2 pt-4 pb-2">
+                    <View className="px-6">
+                        <View className="flex-row items-center justify-between pt-4 pb-2">
                             <View className="flex-row items-center flex-1">
                                 {isSearching && (
                                     <TouchableOpacity onPress={toggleSearch} className="mr-2 p-1 -ml-1">
@@ -93,7 +93,7 @@ export default function CalendarScreen() {
                                 </Text>
                             </View>
                             <TouchableOpacity onPress={toggleSearch} className="p-2 -mr-2 items-center justify-center">
-                                <SolarIcon name="magnifer-linear" size={24} color={isSearching ? "#737373" : "#262626"} />
+                                <SolarIcon name={isSearching ? "magnifer-bold" : "magnifer-linear"} size={24} color="#262626" />
                             </TouchableOpacity>
                         </View>
 
@@ -114,7 +114,7 @@ export default function CalendarScreen() {
                 </View>
 
                 {!isSearching && (
-                    <View className="px-4 pt-6">
+                    <View className="px-4 pt-8">
                         <NameCard
                             dayOfWeek={LV_WEEKDAYS[selectedDate.getDay()]}
                             monthName={LV_MONTHS[selectedDate.getMonth()]}

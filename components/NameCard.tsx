@@ -23,7 +23,7 @@ export default function NameCard({
                 {/* Decorative ball */}
                 <View className="w-4 h-4 rounded-full border-[3px] border-neutral-200 bg-transparent" />
                 {/* Dashed line */}
-                <View className="flex-1 border-l-2 border-dashed border-neutral-400 my-2" />
+                <View className="flex-1 border-l-2 border-dashed border-neutral-200 my-2" />
             </View>
 
             {/* Right column: Content bubble */}

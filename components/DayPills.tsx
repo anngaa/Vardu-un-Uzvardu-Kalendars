@@ -29,7 +29,7 @@ export default function DayPills({ selectedDate, onSelectDate }: DayPillsProps) 
     }, []);
 
     return (
-        <View className="flex-row items-center justify-between w-full px-2 mb-4">
+        <View className="flex-row items-center justify-between w-full mb-4">
             {days.map((item, index) => {
                 const isActive = isSameDay(item.date, selectedDate);
 
@@ -37,13 +37,13 @@ export default function DayPills({ selectedDate, onSelectDate }: DayPillsProps) 
                     <TouchableOpacity
                         key={index}
                         onPress={() => onSelectDate(item.date)}
-                        className={`items-center justify-center rounded-t-full rounded-b-full w-10 py-3 ${isActive ? "bg-[#dce9d7]" : "bg-white"
+                        className={`items-center justify-center rounded-t-full rounded-b-full w-10 py-3 ${isActive ? "bg-[#262626]" : "bg-white"
                             }`}
                     >
-                        <Text className={`text-lg font-semibold ${isActive ? "text-neutral-900" : "text-neutral-600"}`}>
+                        <Text className={`text-lg font-semibold ${isActive ? "text-white" : "text-neutral-600"}`}>
                             {item.dayNum}
                         </Text>
-                        <Text className={`text-xs mt-1 font-medium ${isActive ? "text-neutral-600" : "text-neutral-400"}`}>
+                        <Text className={`text-xs mt-1 font-medium ${isActive ? "text-neutral-400" : "text-neutral-400"}`}>
                             {item.dayStr}
                         </Text>
                     </TouchableOpacity>

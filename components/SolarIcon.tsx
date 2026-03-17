@@ -1,12 +1,22 @@
 import React from "react";
-import Svg, { Circle, Ellipse, G, Path } from "react-native-svg";
+import Svg, { Path, Circle, Ellipse } from "react-native-svg";
 
 export type SolarIconName =
     | "magnifer-linear"
+    | "magnifer-bold"
+    | "magnifer-bold-duotone"
     | "home-angle-2-linear"
+    | "home-angle-2-bold"
+    | "home-angle-2-bold-duotone"
     | "calendar-linear"
+    | "calendar-bold"
+    | "calendar-bold-duotone"
     | "users-group-two-rounded-linear"
+    | "users-group-two-rounded-bold"
+    | "users-group-two-rounded-bold-duotone"
     | "settings-minimalistic-linear"
+    | "settings-minimalistic-bold"
+    | "settings-minimalistic-bold-duotone"
     | "close-circle-linear"
     | "alt-arrow-left-linear"
     | "alt-arrow-right-linear";
@@ -17,118 +27,157 @@ interface SolarIconProps {
     color?: string;
 }
 
+const ICON_COMPONENTS: Record<SolarIconName, React.FC<{ size: number; color: string }>> = {
+    // MAGNIFER
+    "magnifer-linear": ({ size, color }) => (
+        <Svg width={size} height={size} viewBox="0 0 24 24" fill="none">
+            <Circle cx="11.5" cy="11.5" r="9.5" stroke={color} strokeWidth={1.5} />
+            <Path d="M18.5 18.5L22 22" stroke={color} strokeWidth={1.5} strokeLinecap="round" />
+        </Svg>
+    ),
+    "magnifer-bold": ({ size, color }) => (
+        <Svg width={size} height={size} viewBox="0 0 24 24" fill="none">
+            <Path fillRule="evenodd" clipRule="evenodd" d="M21.7883 21.7883C22.0706 21.506 22.0706 21.0483 21.7883 20.7659L18.1224 17.1002C19.4884 15.5007 20.3133 13.425 20.3133 11.1566C20.3133 6.09956 16.2137 2 11.1566 2C6.09956 2 2 6.09956 2 11.1566C2 16.2137 6.09956 20.3133 11.1566 20.3133C13.4249 20.3133 15.5006 19.4885 17.1 18.1225L20.7659 21.7883C21.0483 22.0706 21.506 22.0706 21.7883 21.7883Z" fill={color} />
+        </Svg>
+    ),
+    "magnifer-bold-duotone": ({ size, color }) => (
+        <Svg width={size} height={size} viewBox="0 0 24 24" fill="none">
+            <Path opacity={0.5} d="M20.3133 11.1566C20.3133 16.2137 16.2137 20.3133 11.1566 20.3133C6.09956 20.3133 2 16.2137 2 11.1566C2 6.09956 6.09956 2 11.1566 2C16.2137 2 20.3133 6.09956 20.3133 11.1566Z" fill={color} />
+            <Path d="M17.1001 18.1224L20.7664 21.7887C21.0487 22.071 21.5064 22.071 21.7887 21.7887C22.071 21.5064 22.071 21.0487 21.7887 20.7664L18.1224 17.1001C17.809 17.4671 17.4671 17.809 17.1001 18.1224Z" fill={color} />
+        </Svg>
+    ),
+
+    // HOME ANGLE 2
+    "home-angle-2-linear": ({ size, color }) => (
+        <Svg width={size} height={size} viewBox="0 0 24 24" fill="none">
+            <Path d="M2.36407 12.9579C1.98463 10.3208 1.79491 9.00229 2.33537 7.87495C2.87583 6.7476 4.02619 6.06234 6.32691 4.69181L7.71175 3.86687C9.80104 2.62229 10.8457 2 12 2C13.1543 2 14.199 2.62229 16.2882 3.86687L17.6731 4.69181C19.9738 6.06234 21.1242 6.7476 21.6646 7.87495C22.2051 9.00229 22.0154 10.3208 21.6359 12.9579L21.3572 14.8952C20.8697 18.2827 20.626 19.9764 19.451 20.9882C18.2759 22 16.5526 22 13.1061 22H10.8939C7.44737 22 5.72409 22 4.54903 20.9882C3.37396 19.9764 3.13025 18.2827 2.64284 14.8952L2.36407 12.9579Z" stroke={color} strokeWidth={1.5} />
+            <Path d="M12 15L12 18" stroke={color} strokeWidth={1.5} strokeLinecap="round" />
+        </Svg>
+    ),
+    "home-angle-2-bold": ({ size, color }) => (
+        <Svg width={size} height={size} viewBox="0 0 24 24" fill="none">
+            <Path fillRule="evenodd" clipRule="evenodd" d="M2.33537 7.87495C1.79491 9.00229 1.98463 10.3208 2.36407 12.9579L2.64284 14.8952C3.13025 18.2827 3.37396 19.9764 4.54903 20.9882C5.72409 22 7.44737 22 10.8939 22H13.1061C16.5526 22 18.2759 22 19.451 20.9882C20.626 19.9764 20.8697 18.2827 21.3572 14.8952L21.6359 12.9579C22.0154 10.3208 22.2051 9.00229 21.6646 7.87495C21.1242 6.7476 19.9738 6.06234 17.6731 4.69181L16.2882 3.86687C14.199 2.62229 13.1543 2 12 2C10.8457 2 9.80104 2.62229 7.71175 3.86687L6.32691 4.69181C4.02619 6.06234 2.87583 6.7476 2.33537 7.87495ZM12 18.75C11.5858 18.75 11.25 18.4142 11.25 18V15C11.25 14.5858 11.5858 14.25 12 14.25C12.4142 14.25 12.75 14.5858 12.75 15V18C12.75 18.4142 12.4142 18.75 12 18.75Z" fill={color} />
+        </Svg>
+    ),
+    "home-angle-2-bold-duotone": ({ size, color }) => (
+        <Svg width={size} height={size} viewBox="0 0 24 24" fill="none">
+            <Path opacity={0.5} d="M13.1061 22H10.8939C7.44737 22 5.72409 22 4.54903 20.9882C3.37396 19.9764 3.13025 18.2827 2.64284 14.8952L2.36407 12.9579C1.98463 10.3208 1.79491 9.00229 2.33537 7.87495C2.87583 6.7476 4.02619 6.06234 6.32691 4.69181L7.71175 3.86687C9.80104 2.62229 10.8457 2 12 2C13.1543 2 14.199 2.62229 16.2882 3.86687L17.6731 4.69181C19.9738 6.06234 21.1242 6.7476 21.6646 7.87495C22.2051 9.00229 22.0154 10.3208 21.6359 12.9579L21.3572 14.8952C20.8697 18.2827 20.626 19.9764 19.451 20.9882C18.2759 22 16.5526 22 13.1061 22Z" fill={color} />
+            <Path fillRule="evenodd" clipRule="evenodd" d="M12 18.75C11.5858 18.75 11.25 18.4142 11.25 18V15C11.25 14.5858 11.5858 14.25 12 14.25C12.4142 14.25 12.75 14.5858 12.75 15V18C12.75 18.4142 12.4142 18.75 12 18.75Z" fill={color} />
+        </Svg>
+    ),
+
+    // CALENDAR
+    "calendar-linear": ({ size, color }) => (
+        <Svg width={size} height={size} viewBox="0 0 24 24" fill="none">
+            <Path d="M2 12C2 8.22876 2 6.34315 3.17157 5.17157C4.34315 4 6.22876 4 10 4H14C17.7712 4 19.6569 4 20.8284 5.17157C22 6.34315 22 8.22876 22 12V14C22 17.7712 22 19.6569 20.8284 20.8284C19.6569 22 17.7712 22 14 22H10C6.22876 22 4.34315 22 3.17157 20.8284C2 19.6569 2 17.7712 2 14V12Z" stroke={color} strokeWidth={1.5} />
+            <Path d="M7 4V2.5" stroke={color} strokeWidth={1.5} strokeLinecap="round" />
+            <Path d="M17 4V2.5" stroke={color} strokeWidth={1.5} strokeLinecap="round" />
+            <Path d="M2.5 9H21.5" stroke={color} strokeWidth={1.5} strokeLinecap="round" />
+            <Path d="M18 17C18 17.5523 17.5523 18 17 18C16.4477 18 16 17.5523 16 17C16 16.4477 16.4477 16 17 16C17.5523 16 18 16.4477 18 17Z" fill={color} />
+            <Path d="M18 13C18 13.5523 17.5523 14 17 14C16.4477 14 16 13.5523 16 13C16 12.4477 16.4477 12 17 12C17.5523 12 18 12.4477 18 13Z" fill={color} />
+            <Path d="M13 17C13 17.5523 12.5523 18 12 18C11.4477 18 11 17.5523 11 17C11 16.4477 11.4477 16 12 16C12.5523 16 13 16.4477 13 17Z" fill={color} />
+            <Path d="M13 13C13 13.5523 12.5523 14 12 14C11.4477 14 11 13.5523 11 13C11 12.4477 11.4477 12 12 12C12.5523 12 13 12.4477 13 13Z" fill={color} />
+            <Path d="M8 17C8 17.5523 7.55228 18 7 18C6.44772 18 6 17.5523 6 17C6 16.4477 6.44772 16 7 16C7.55228 16 8 16.4477 8 17Z" fill={color} />
+            <Path d="M8 13C8 13.5523 7.55228 14 7 14C6.44772 14 6 13.5523 6 13C6 12.4477 6.44772 12 7 12C7.55228 12 8 12.4477 8 13Z" fill={color} />
+        </Svg>
+    ),
+    "calendar-bold": ({ size, color }) => (
+        <Svg width={size} height={size} viewBox="0 0 24 24" fill="none">
+            <Path d="M7.75 2.5C7.75 2.08579 7.41421 1.75 7 1.75C6.58579 1.75 6.25 2.08579 6.25 2.5V4.07926C4.81067 4.19451 3.86577 4.47737 3.17157 5.17157C2.47737 5.86577 2.19451 6.81067 2.07926 8.25H21.9207C21.8055 6.81067 21.5226 5.86577 20.8284 5.17157C20.1342 4.47737 19.1893 4.19451 17.75 4.07926V2.5C17.75 2.08579 17.4142 1.75 17 1.75C16.5858 1.75 16.25 2.08579 16.25 2.5V4.0129C15.5847 4 14.839 4 14 4H10C9.16097 4 8.41527 4 7.75 4.0129V2.5Z" fill={color} />
+            <Path fillRule="evenodd" clipRule="evenodd" d="M2 12C2 11.161 2 10.4153 2.0129 9.75H21.9871C22 10.4153 22 11.161 22 12V14C22 17.7712 22 19.6569 20.8284 20.8284C19.6569 22 17.7712 22 14 22H10C6.22876 22 4.34315 22 3.17157 20.8284C2 19.6569 2 17.7712 2 14V12ZM17 14C17.5523 14 18 13.5523 18 13C18 12.4477 17.5523 12 17 12C16.4477 12 16 12.4477 16 13C16 13.5523 16.4477 14 17 14ZM17 18C17.5523 18 18 17.5523 18 17C18 16.4477 17.5523 16 17 16C16.4477 16 16 16.4477 16 17C16 17.5523 16.4477 18 17 18ZM13 13C13 13.5523 12.5523 14 12 14C11.4477 14 11 13.5523 11 13C11 12.4477 11.4477 12 12 12C12.5523 12 13 12.4477 13 13ZM13 17C13 17.5523 12.5523 18 12 18C11.4477 18 11 17.5523 11 17C11 16.4477 11.4477 16 12 16C12.5523 16 13 16.4477 13 17ZM7 14C7.55228 14 8 13.5523 8 13C8 12.4477 7.55228 12 7 12C6.44772 12 6 12.4477 6 13C6 13.5523 6.44772 14 7 14ZM7 18C7.55228 18 8 17.5523 8 17C8 16.4477 7.55228 16 7 16C6.44772 16 6 16.4477 6 17C6 17.5523 6.44772 18 7 18Z" fill={color} />
+        </Svg>
+    ),
+    "calendar-bold-duotone": ({ size, color }) => (
+        <Svg width={size} height={size} viewBox="0 0 24 24" fill="none">
+            <Path d="M6.94028 2C7.35614 2 7.69326 2.32421 7.69326 2.72414V4.18487C8.36117 4.17241 9.10983 4.17241 9.95219 4.17241H13.9681C14.8104 4.17241 15.5591 4.17241 16.227 4.18487V2.72414C16.227 2.32421 16.5641 2 16.98 2C17.3958 2 17.733 2.32421 17.733 2.72414V4.24894C19.178 4.36022 20.1267 4.63333 20.8236 5.30359C21.5206 5.97385 21.8046 6.88616 21.9203 8.27586L22 9H2.92456H2V8.27586C2.11571 6.88616 2.3997 5.97385 3.09665 5.30359C3.79361 4.63333 4.74226 4.36022 6.1873 4.24894V2.72414C6.1873 2.32421 6.52442 2 6.94028 2Z" fill={color} />
+            <Path opacity={0.5} d="M22 14.0001V12.0001C22 11.161 21.9968 9.66527 21.9839 9H2.00966C1.99675 9.66527 2.00001 11.161 2.00001 12.0001V14.0001C2.00001 17.7713 2.00001 19.6569 3.17159 20.8285C4.34316 22.0001 6.22878 22.0001 10 22.0001H14C17.7713 22.0001 19.6569 22.0001 20.8284 20.8285C22 19.6569 22 17.7713 22 14.0001Z" fill={color} />
+            <Path d="M18 17C18 17.5523 17.5523 18 17 18C16.4477 18 16 17.5523 16 17C16 16.4477 16.4477 16 17 16C17.5523 16 18 16.4477 18 17Z" fill={color} />
+            <Path d="M18 13C18 13.5523 17.5523 14 17 14C16.4477 14 16 13.5523 16 13C16 12.4477 16.4477 12 17 12C17.5523 12 18 12.4477 18 13Z" fill={color} />
+            <Path d="M13 17C13 17.5523 12.5523 18 12 18C11.4477 18 11 17.5523 11 17C11 16.4477 11.4477 16 12 16C12.5523 16 13 16.4477 13 17Z" fill={color} />
+            <Path d="M13 13C13 13.5523 12.5523 14 12 14C11.4477 14 11 13.5523 11 13C11 12.4477 11.4477 12 12 12C12.5523 12 13 12.4477 13 13Z" fill={color} />
+            <Path d="M8 17C8 17.5523 7.55228 18 7 18C6.44772 18 6 17.5523 6 17C6 16.4477 6.44772 16 7 16C7.55228 16 8 16.4477 8 17Z" fill={color} />
+            <Path d="M8 13C8 13.5523 7.55228 14 7 14C6.44772 14 6 13.5523 6 13C6 12.4477 6.44772 12 7 12C7.55228 12 8 12.4477 8 13Z" fill={color} />
+        </Svg>
+    ),
+
+    // USERS GROUP TWO ROUNDED
+    "users-group-two-rounded-linear": ({ size, color }) => (
+        <Svg width={size} height={size} viewBox="0 0 24 24" fill="none">
+            <Circle cx="12" cy="6" r="4" stroke={color} strokeWidth={1.5} />
+            <Path d="M18 9C19.6569 9 21 7.88071 21 6.5C21 5.11929 19.6569 4 18 4" stroke={color} strokeWidth={1.5} strokeLinecap="round" />
+            <Path d="M6 9C4.34315 9 3 7.88071 3 6.5C3 5.11929 4.34315 4 6 4" stroke={color} strokeWidth={1.5} strokeLinecap="round" />
+            <Ellipse cx="12" cy="17" rx="6" ry="4" stroke={color} strokeWidth={1.5} />
+            <Path d="M20 19C21.7542 18.6153 23 17.6411 23 16.5C23 15.3589 21.7542 14.3847 20 14" stroke={color} strokeWidth={1.5} strokeLinecap="round" />
+            <Path d="M4 19C2.24575 18.6153 1 17.6411 1 16.5C1 15.3589 2.24575 14.3847 4 14" stroke={color} strokeWidth={1.5} strokeLinecap="round" />
+        </Svg>
+    ),
+    "users-group-two-rounded-bold": ({ size, color }) => (
+        <Svg width={size} height={size} viewBox="0 0 24 24" fill="none">
+            <Path d="M15.5 7.5C15.5 9.433 13.933 11 12 11C10.067 11 8.5 9.433 8.5 7.5C8.5 5.567 10.067 4 12 4C13.933 4 15.5 5.567 15.5 7.5Z" fill={color} />
+            <Path d="M18 16.5C18 18.433 15.3137 20 12 20C8.68629 20 6 18.433 6 16.5C6 14.567 8.68629 13 12 13C15.3137 13 18 14.567 18 16.5Z" fill={color} />
+            <Path d="M7.12205 5C7.29951 5 7.47276 5.01741 7.64005 5.05056C7.23249 5.77446 7 6.61008 7 7.5C7 8.36825 7.22131 9.18482 7.61059 9.89636C7.45245 9.92583 7.28912 9.94126 7.12205 9.94126C5.70763 9.94126 4.56102 8.83512 4.56102 7.47063C4.56102 6.10614 5.70763 5 7.12205 5Z" fill={color} />
+            <Path d="M5.44734 18.986C4.87942 18.3071 4.5 17.474 4.5 16.5C4.5 15.5558 4.85657 14.744 5.39578 14.0767C3.4911 14.2245 2 15.2662 2 16.5294C2 17.8044 3.5173 18.8538 5.44734 18.986Z" fill={color} />
+            <Path d="M16.9999 7.5C16.9999 8.36825 16.7786 9.18482 16.3893 9.89636C16.5475 9.92583 16.7108 9.94126 16.8779 9.94126C18.2923 9.94126 19.4389 8.83512 19.4389 7.47063C19.4389 6.10614 18.2923 5 16.8779 5C16.7004 5 16.5272 5.01741 16.3599 5.05056C16.7674 5.77446 16.9999 6.61008 16.9999 7.5Z" fill={color} />
+            <Path d="M18.5526 18.986C20.4826 18.8538 21.9999 17.8044 21.9999 16.5294C21.9999 15.2662 20.5088 14.2245 18.6041 14.0767C19.1433 14.744 19.4999 15.5558 19.4999 16.5C19.4999 17.474 19.1205 18.3071 18.5526 18.986Z" fill={color} />
+        </Svg>
+    ),
+    "users-group-two-rounded-bold-duotone": ({ size, color }) => (
+        <Svg width={size} height={size} viewBox="0 0 24 24" fill="none">
+            <Path d="M15.5 7.5C15.5 9.433 13.933 11 12 11C10.067 11 8.5 9.433 8.5 7.5C8.5 5.567 10.067 4 12 4C13.933 4 15.5 5.567 15.5 7.5Z" fill={color} />
+            <Path opacity={0.4} d="M19.5 7.5C19.5 8.88071 18.3807 10 17 10C15.6193 10 14.5 8.88071 14.5 7.5C14.5 6.11929 15.6193 5 17 5C18.3807 5 19.5 6.11929 19.5 7.5Z" fill={color} />
+            <Path opacity={0.4} d="M4.5 7.5C4.5 8.88071 5.61929 10 7 10C8.38071 10 9.5 8.88071 9.5 7.5C9.5 6.11929 8.38071 5 7 5C5.61929 5 4.5 6.11929 4.5 7.5Z" fill={color} />
+            <Path d="M18 16.5C18 18.433 15.3137 20 12 20C8.68629 20 6 18.433 6 16.5C6 14.567 8.68629 13 12 13C15.3137 13 18 14.567 18 16.5Z" fill={color} />
+            <Path opacity={0.4} d="M22 16.5C22 17.8807 20.2091 19 18 19C15.7909 19 14 17.8807 14 16.5C14 15.1193 15.7909 14 18 14C20.2091 14 22 15.1193 22 16.5Z" fill={color} />
+            <Path opacity={0.4} d="M2 16.5C2 17.8807 3.79086 19 6 19C8.20914 19 10 17.8807 10 16.5C10 15.1193 8.20914 14 6 14C3.79086 14 2 15.1193 2 16.5Z" fill={color} />
+        </Svg>
+    ),
+
+    // SETTINGS MINIMALISTIC
+    "settings-minimalistic-linear": ({ size, color }) => (
+        <Svg width={size} height={size} viewBox="0 0 24 24" fill="none">
+            <Path d="M7.84308 3.80211C9.8718 2.6007 10.8862 2 12 2C13.1138 2 14.1282 2.6007 16.1569 3.80211L16.8431 4.20846C18.8718 5.40987 19.8862 6.01057 20.4431 7C21 7.98943 21 9.19084 21 11.5937V12.4063C21 14.8092 21 16.0106 20.4431 17C19.8862 17.9894 18.8718 18.5901 16.8431 19.7915L16.1569 20.1979C14.1282 21.3993 13.1138 22 12 22C10.8862 22 9.8718 21.3993 7.84308 20.1979L7.15692 19.7915C5.1282 18.5901 4.11384 17.9894 3.55692 17C3 16.0106 3 14.8092 3 12.4063V11.5937C3 9.19084 3 7.98943 3.55692 7C4.11384 6.01057 5.1282 5.40987 7.15692 4.20846L7.84308 3.80211Z" stroke={color} strokeWidth={1.5} />
+            <Circle cx="12" cy="12" r="3" stroke={color} strokeWidth={1.5} />
+        </Svg>
+    ),
+    "settings-minimalistic-bold": ({ size, color }) => (
+        <Svg width={size} height={size} viewBox="0 0 24 24" fill="none">
+            <Path fillRule="evenodd" clipRule="evenodd" d="M12.4277 2C11.3139 2 10.2995 2.6007 8.27081 3.80211L7.58466 4.20846C5.55594 5.40987 4.54158 6.01057 3.98466 7C3.42773 7.98943 3.42773 9.19084 3.42773 11.5937V12.4063C3.42773 14.8092 3.42773 16.0106 3.98466 17C4.54158 17.9894 5.55594 18.5901 7.58466 19.7915L8.27081 20.1979C10.2995 21.3993 11.3139 22 12.4277 22C13.5416 22 14.5559 21.3993 16.5847 20.1979L17.2708 19.7915C19.2995 18.5901 20.3139 17.9894 20.8708 17C21.4277 16.0106 21.4277 14.8092 21.4277 12.4063V11.5937C21.4277 9.19084 21.4277 7.98943 20.8708 7C20.3139 6.01057 19.2995 5.40987 17.2708 4.20846L16.5847 3.80211C14.5559 2.6007 13.5416 2 12.4277 2ZM8.67773 12C8.67773 9.92893 10.3567 8.25 12.4277 8.25C14.4988 8.25 16.1777 9.92893 16.1777 12C16.1777 14.0711 14.4988 15.75 12.4277 15.75C10.3567 15.75 8.67773 14.0711 8.67773 12Z" fill={color} />
+        </Svg>
+    ),
+    "settings-minimalistic-bold-duotone": ({ size, color }) => (
+        <Svg width={size} height={size} viewBox="0 0 24 24" fill="none">
+            <Path opacity={0.5} fillRule="evenodd" clipRule="evenodd" d="M12.4277 2C11.3139 2 10.2995 2.6007 8.27081 3.80211L7.58466 4.20846C5.55594 5.40987 4.54158 6.01057 3.98466 7C3.42773 7.98943 3.42773 9.19084 3.42773 11.5937V12.4063C3.42773 14.8092 3.42773 16.0106 3.98466 17C4.54158 17.9894 5.55594 18.5901 7.58466 19.7915L8.27081 20.1979C10.2995 21.3993 11.3139 22 12.4277 22C13.5416 22 14.5559 21.3993 16.5847 20.1979L17.2708 19.7915C19.2995 18.5901 20.3139 17.9894 20.8708 17C21.4277 16.0106 21.4277 14.8092 21.4277 12.4063V11.5937C21.4277 9.19084 21.4277 7.98943 20.8708 7C20.3139 6.01057 19.2995 5.40987 17.2708 4.20846L16.5847 3.80211C14.5559 2.6007 13.5416 2 12.4277 2Z" fill={color} />
+            <Path d="M12.4277 8.25C10.3567 8.25 8.67773 9.92893 8.67773 12C8.67773 14.0711 10.3567 15.75 12.4277 15.75C14.4988 15.75 16.1777 14.0711 16.1777 12C16.1777 9.92893 14.4988 8.25 12.4277 8.25Z" fill={color} />
+        </Svg>
+    ),
+
+    // ESSENTIONAL UI
+    "close-circle-linear": ({ size, color }) => (
+        <Svg width={size} height={size} viewBox="0 0 24 24" fill="none">
+            <Circle cx="12" cy="12" r="10" stroke={color} strokeWidth={1.5} />
+            <Path d="M14.5 9.49999L9.5 14.5M9.49998 9.49997L14.5 14.4999" stroke={color} strokeWidth={1.5} strokeLinecap="round" />
+        </Svg>
+    ),
+
+    // ARROWS (Manual implementation of "V" shape to fix library bugs)
+    "alt-arrow-left-linear": ({ size, color }) => (
+        <Svg width={size} height={size} viewBox="0 0 24 24" fill="none">
+            <Path d="M15 19L9 12L15 5" stroke={color} strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round" />
+        </Svg>
+    ),
+    "alt-arrow-right-linear": ({ size, color }) => (
+        <Svg width={size} height={size} viewBox="0 0 24 24" fill="none">
+            <Path d="M9 5L15 12L9 19" stroke={color} strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round" />
+        </Svg>
+    )
+};
+
 export default function SolarIcon({ name, size = 24, color = "#000" }: SolarIconProps) {
-    switch (name) {
-        case "magnifer-linear":
-            return (
-                <Svg width={size} height={size} viewBox="0 0 24 24" fill="none">
-                    <Circle cx={11.5} cy={11.5} r={9.5} stroke={color} strokeWidth={1.5} />
-                    <Path d="M18.5 18.5L22 22" stroke={color} strokeWidth={1.5} strokeLinecap="round" />
-                </Svg>
-            );
+    const IconComponent = ICON_COMPONENTS[name];
 
-        case "home-angle-2-linear":
-            return (
-                <Svg width={size} height={size} viewBox="0 0 24 24" fill="none">
-                    <Path
-                        d="M2.364 12.958c-.38-2.637-.57-3.956-.029-5.083s1.691-1.813 3.992-3.183l1.385-.825C9.8 2.622 10.846 2 12 2s2.199.622 4.288 1.867l1.385.825c2.3 1.37 3.451 2.056 3.992 3.183s.35 2.446-.03 5.083l-.278 1.937c-.487 3.388-.731 5.081-1.906 6.093S16.553 22 13.106 22h-2.212c-3.447 0-5.17 0-6.345-1.012s-1.419-2.705-1.906-6.093z"
-                        stroke={color}
-                        strokeWidth={1.5}
-                    />
-                    <Path d="M12 15v3" stroke={color} strokeWidth={1.5} strokeLinecap="round" />
-                </Svg>
-            );
-
-        case "calendar-linear":
-            return (
-                <Svg width={size} height={size} viewBox="0 0 24 24" fill="none">
-                    <Path
-                        d="M2 12c0-3.771 0-5.657 1.172-6.828S6.229 4 10 4h4c3.771 0 5.657 0 6.828 1.172S22 8.229 22 12v2c0 3.771 0 5.657-1.172 6.828S17.771 22 14 22h-4c-3.771 0-5.657 0-6.828-1.172S2 17.771 2 14z"
-                        stroke={color}
-                        strokeWidth={1.5}
-                    />
-                    <Path
-                        d="M7 4V2.5M17 4V2.5M2.5 9h19"
-                        stroke={color}
-                        strokeWidth={1.5}
-                        strokeLinecap="round"
-                    />
-                    <Circle cx={17} cy={17} r={1} fill={color} />
-                    <Circle cx={17} cy={13} r={1} fill={color} />
-                    <Circle cx={12} cy={17} r={1} fill={color} />
-                    <Circle cx={12} cy={13} r={1} fill={color} />
-                    <Circle cx={7} cy={17} r={1} fill={color} />
-                    <Circle cx={7} cy={13} r={1} fill={color} />
-                </Svg>
-            );
-
-        case "users-group-two-rounded-linear":
-            return (
-                <Svg width={size} height={size} viewBox="0 0 24 24" fill="none">
-                    <Circle cx={12} cy={6} r={4} stroke={color} strokeWidth={1.5} />
-                    <Path
-                        d="M18 9c1.657 0 3-1.12 3-2.5S19.657 4 18 4M6 9C4.343 9 3 7.88 3 6.5S4.343 4 6 4"
-                        stroke={color}
-                        strokeWidth={1.5}
-                        strokeLinecap="round"
-                    />
-                    <Ellipse cx={12} cy={17} rx={6} ry={4} stroke={color} strokeWidth={1.5} />
-                    <Path
-                        d="M20 19c1.754-.385 3-1.359 3-2.5s-1.246-2.115-3-2.5M4 19c-1.754-.385-3-1.359-3-2.5s1.246-2.115 3-2.5"
-                        stroke={color}
-                        strokeWidth={1.5}
-                        strokeLinecap="round"
-                    />
-                </Svg>
-            );
-
-        case "settings-minimalistic-linear":
-            return (
-                <Svg width={size} height={size} viewBox="0 0 24 24" fill="none">
-                    <Path
-                        d="M7.843 3.802C9.872 2.601 10.886 2 12 2s2.128.6 4.157 1.802l.686.406c2.029 1.202 3.043 1.803 3.6 2.792c.557.99.557 2.19.557 4.594v.812c0 2.403 0 3.605-.557 4.594s-1.571 1.59-3.6 2.791l-.686.407C14.128 21.399 13.114 22 12 22s-2.128-.6-4.157-1.802l-.686-.407c-2.029-1.2-3.043-1.802-3.6-2.791C3 16.01 3 14.81 3 12.406v-.812C3 9.19 3 7.989 3.557 7s1.571-1.59 3.6-2.792z"
-                        stroke={color}
-                        strokeWidth={1.5}
-                    />
-                    <Circle cx={12} cy={12} r={3} stroke={color} strokeWidth={1.5} />
-                </Svg>
-            );
-
-        case "close-circle-linear":
-            return (
-                <Svg width={size} height={size} viewBox="0 0 24 24" fill="none">
-                    <Circle cx={12} cy={12} r={10} stroke={color} strokeWidth={1.5} />
-                    <Path d="m14.5 9.5l-5 5m0-5l5 5" stroke={color} strokeWidth={1.5} strokeLinecap="round" />
-                </Svg>
-            );
-
-        case "alt-arrow-left-linear":
-            return (
-                <Svg width={size} height={size} viewBox="0 0 24 24" fill="none">
-                    <Path
-                        d="m15 5l-6 7l6 7"
-                        stroke={color}
-                        strokeWidth={1.5}
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                    />
-                </Svg>
-            );
-
-        case "alt-arrow-right-linear":
-            return (
-                <Svg width={size} height={size} viewBox="0 0 24 24" fill="none">
-                    <Path
-                        d="m9 5l6 7l-6 7"
-                        stroke={color}
-                        strokeWidth={1.5}
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                    />
-                </Svg>
-            );
-
-        default:
-            return null;
+    if (!IconComponent) {
+        return null;
     }
+
+    return <IconComponent size={size} color={color} />;
 }
